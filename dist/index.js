@@ -9,7 +9,6 @@ const persons = [
         street: "Calle Backend",
         city: "Barcelona",
         id: "123123",
-        check: ""
     },
     {
         name: "Carlos",
@@ -17,23 +16,16 @@ const persons = [
         street: "Calle Frontend",
         city: "Barcelona",
         id: "456456",
-        check: ""
     },
     {
         name: "Alex",
-        phone: "567565656",
         street: "Calle Java",
         city: "Barcelona",
         id: "789789",
-        check: ""
     }
 ];
 const typeDefs = `#graphql
-  enum YesNo {
-    YES 
-    NO 
-  }
-
+  
   type Address {
     street: String!
     city: String!
@@ -45,6 +37,11 @@ const typeDefs = `#graphql
     address: Address!
     id: ID!
     check: String!
+  }
+
+  enum YesNo {
+    YES 
+    NO 
   }
 
   type Query {
@@ -116,6 +113,7 @@ const resolvers = {
                 city: root.city
             };
         }
+        //name: (root: Person) => `${root.name}, ${root.phone}`,
     }
 };
 const server = new ApolloServer({
