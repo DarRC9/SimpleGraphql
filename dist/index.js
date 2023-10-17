@@ -36,7 +36,6 @@ const typeDefs = `#graphql
     phone: String
     address: Address!
     id: ID!
-    check: String!
   }
 
   enum YesNo {
@@ -91,7 +90,7 @@ const resolvers = {
                     },
                 });
             }
-            const person = { ...args, id: uuid(), check: "" };
+            const person = { ...args, id: uuid() };
             persons.push(person);
             return person;
         },
@@ -106,7 +105,6 @@ const resolvers = {
         }
     },
     Person: {
-        check: (_root) => "Checked",
         address: (root) => {
             return {
                 street: root.street,

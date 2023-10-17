@@ -9,7 +9,6 @@ interface Person {
   street: string;
   city: string;
   id: string;
-  check?: string;
 }
 
 const persons: Person[] = [
@@ -47,7 +46,6 @@ const typeDefs = `#graphql
     phone: String
     address: Address!
     id: ID!
-    check: String!
   }
 
   enum YesNo {
@@ -83,7 +81,6 @@ const resolvers = {
       if (!args.phone) {
         return persons;
       }
-
       const byPhone = (person: Person) => args.phone === 'YES' ? person.phone : !person.phone;
       return persons.filter(byPhone);
     },
@@ -106,8 +103,8 @@ const resolvers = {
           },
         });
       }
-
-      const person = { ...args, id: uuid(), check: "" };
+      
+      const person = { ...args, id: uuid()};
       persons.push(person);
       return person;
     },
@@ -117,17 +114,13 @@ const resolvers = {
       if (personIndex === -1) return null;
 
       const person = persons[personIndex];
-
       const updatedPerson = { ...person, phone: args.phone };
       persons[personIndex] = updatedPerson;
-
       return updatedPerson;
     }
   },
 
   Person: {
-    check: (_root: Person) => "Checked",
-    
     address: (root: Person) => {
       return {
         street: root.street,
