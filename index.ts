@@ -9,7 +9,6 @@ interface Person {
   street: string;
   city: string;
   id: string;
-  check: string;
 }
 
 const persons: Person[] = [
@@ -19,7 +18,6 @@ const persons: Person[] = [
     street: "Calle Backend",
     city: "Barcelona",
     id: "123123",
-    check: ""
   },
   {
     name: "Carlos",
@@ -27,24 +25,17 @@ const persons: Person[] = [
     street: "Calle Frontend",
     city: "Barcelona",
     id: "456456",
-    check: ""
   },
   {
     name: "Alex",
-    phone: "567565656",
     street: "Calle Java",
     city: "Barcelona",
     id: "789789",
-    check: ""
   }
 ];
 
 const typeDefs = `#graphql
-  enum YesNo {
-    YES 
-    NO 
-  }
-
+  
   type Address {
     street: String!
     city: String!
@@ -55,7 +46,11 @@ const typeDefs = `#graphql
     phone: String
     address: Address!
     id: ID!
-    check: String!
+  }
+
+  enum YesNo {
+    YES 
+    NO 
   }
 
   type Query {
@@ -93,8 +88,7 @@ const resolvers = {
         } else {
           return null; // Return null 
         }
-      };      
-      return persons.filter(byPhone);
+      };        return persons.filter(byPhone);
     },
 
     findPerson: (_root: any, args: { name: string }) => {
@@ -115,8 +109,8 @@ const resolvers = {
           },
         });
       }
-
-      const person = { ...args, id: uuid(), check: "" };
+      
+      const person = { ...args, id: uuid()};
       persons.push(person);
       return person;
     },
@@ -126,23 +120,20 @@ const resolvers = {
       if (personIndex === -1) return null;
 
       const person = persons[personIndex];
-
       const updatedPerson = { ...person, phone: args.phone };
       persons[personIndex] = updatedPerson;
-
       return updatedPerson;
     }
   },
 
   Person: {
-    check: (_root: Person) => "Checked",
-
     address: (root: Person) => {
       return {
         street: root.street,
         city: root.city
       };
     }
+    //name: (root: Person) => `${root.name}, ${root.phone}`,
   }
 };
 
