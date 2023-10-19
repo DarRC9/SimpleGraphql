@@ -87,7 +87,13 @@ const resolvers = {
         return persons;
       }
 
-      const byPhone = (person: Person) => args.phone === 'YES' ? person.phone : !person.phone;
+      const byPhone = (person: Person) => {
+        if (args.phone === 'YES') {
+          return person.phone; // Return the person's phone number
+        } else {
+          return null; // Return null 
+        }
+      };      
       return persons.filter(byPhone);
     },
 
