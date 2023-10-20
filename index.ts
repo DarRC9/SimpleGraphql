@@ -84,11 +84,12 @@ const resolvers = {
 
       const byPhone = (person: Person) => {
         if (args.phone === 'YES') {
-          return person.phone; // Return the person's phone number
+          return person.phone; // person.phone means that the field phone has to exist 
         } else {
-          return null; // Return null 
+          return !person.phone; // !person.phone means that the field phone does not exist (null)
         }
-      };        return persons.filter(byPhone);
+      };        
+      return persons.filter(byPhone);
     },
 
     findPerson: (_root: any, args: { name: string }) => {

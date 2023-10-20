@@ -75,7 +75,7 @@ const resolvers = {
                     return person.phone; // Return the person's phone number
                 }
                 else {
-                    return null; // Return null 
+                    return !person.phone; // Return null 
                 }
             };
             return persons.filter(byPhone);
